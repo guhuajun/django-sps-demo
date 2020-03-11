@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Django SPS Demo</title>
+
+  <!-- Bootstrap Core CSS -->
+  <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+
+  <!-- Site CSS -->
+  <link href="{% static 'mobile/site.css' %}" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+  <div id="page-wrapper" class="container">
+    <nav class="navbar navbar-light bg-light">
+      <span class="navbar-brand mb-0 h1">SPS Demo</span>
+    </nav>
+    {% block content %}
+    {% endblock %}
+  </div>
+
+  <!-- jQuery -->
+  <script src="{% static 'jquery/jquery.min.js' %}"></script>
+</body>
+
+</html>
