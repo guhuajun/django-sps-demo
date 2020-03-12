@@ -24,7 +24,22 @@
         <li class="list-group-item">Item 2</li>
         <li class="list-group-item">Item 3</li>
       </ul>
-      <a href="#">打开OWA</a>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">SPS Lists</h4>
+        <p class="card-text"></p>
+      </div>
+      <ul class="list-group list-group-flush">
+        {% for sps_list in sps_lists %}
+        <li class="list-group-item">{{ sps_list }}</li>
+        {% endfor %}
+      </ul>
     </div>
   </div>
 </div>
