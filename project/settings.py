@@ -122,6 +122,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_BASE = os.path.join(BASE_DIR, 'static')
 
-# SPS Sites
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
 
+# SPS Sites
 SPS_ROOT = 'http://sps01/'

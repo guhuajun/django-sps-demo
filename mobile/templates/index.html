@@ -1,47 +1,42 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block content %}
+{% extends "base.html" %} {% load static %} {% block content %}
 
 <div class="row">
-  <div class="col-8">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">公司新闻</h4>
-        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel alias numquam repudiandae!
-          Dolorem illo natus aliquid provident non voluptatem recusandae amet tempore. Nostrum harum incidunt rem optio
-          omnis totam nihil?</p>
-      </div>
+    <div class="col-8">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">公司新闻</h4>
+                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel alias numquam repudiandae! Dolorem illo natus aliquid provident non voluptatem recusandae amet tempore. Nostrum harum incidunt rem optio omnis totam nihil?</p>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="col-4">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">邮件</h4>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">Item 1</li>
-        <li class="list-group-item">Item 2</li>
-        <li class="list-group-item">Item 3</li>
-      </ul>
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">邮件</h4>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Item 1</li>
+                <li class="list-group-item">Item 2</li>
+                <li class="list-group-item">Item 3</li>
+            </ul>
+        </div>
     </div>
-  </div>
 </div>
 
 <div class="row">
-  <div class="col-12">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">SPS Lists</h4>
-        <p class="card-text"></p>
-      </div>
-      <ul class="list-group list-group-flush">
-        {% for sps_list in sps_lists %}
-        <li class="list-group-item">{{ sps_list }}</li>
-        {% endfor %}
-      </ul>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">文档</h4>
+                <p class="card-text"></p>
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for sps_list in sps_lists %}
+                <li class="list-group-item">{{ sps_list }}</li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-  </div>
 </div>
 
 {% endblock %}
