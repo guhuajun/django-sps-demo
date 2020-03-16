@@ -22,7 +22,7 @@
             <span class="navbar-brand mb-0 h1">SPS Demo</span>
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    {% if sps_username %} 欢迎回来，{{ sps_username }}，<a href="/logoff"> 注销</a> {% else %}
+                    {% if username %} 欢迎回来，{{ username }}，<a href="/logoff"> 注销</a> {% else %}
                     <a href="/login">登录</a> {% endif %}
                 </li>
             </ul>

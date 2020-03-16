@@ -12,5 +12,4 @@ class CredentialForm(forms.Form):
 
     def set_cache(self):
         cache = caches['default']
-        cache.set('sps_username', self.data['username'], 360)
-        cache.set('sps_password', self.data['password'], 360)
+        cache.set(self.data['username'], self.data['password'], 360)
