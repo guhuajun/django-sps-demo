@@ -2,12 +2,13 @@ import logging
 
 import requests
 import simplejson as json
-
 from django.conf import settings
+from django.core.cache import caches
 from django.http.response import HttpResponsePermanentRedirect
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
-from django.core.cache import caches
+from exchangelib import Account, Credentials, Configuration
+from exchangelib.protocol import BaseProtocol, NoVerifyHTTPAdapter
 from requests_ntlm import HttpNtlmAuth
 
 from mobile.forms import CredentialForm
@@ -33,13 +34,24 @@ class IndexView(TemplateView):
         username = self.request.session['username']
         password = self.cache.get(username)
 
+        # Tell exchangelib to use this adapter class instead of the default
+        BaseProtocol.HTTP_ADAPTER_CLS = NoVerifyHTTPAdapter
+
+        credentials = Credentials(username, password)
+        config = Configuration(server='ex01.corp.contoso.com', credentials=credentials)
+        account = Account(username, credentials=credentials, config=config)
+
+        latest_messages = account.inbox.all().order_by('-datetime_received')[:100]
+        context['messages'] = [{'subject': x.subject, 'sender': x.sender.email_address} for x in latest_messages]
+
         try:
             # retrieve data from sharepoint
             sps_site_url = settings.SPS_ROOT + \
                 '/sites/it/_api/web/lists/GetByTitle(\'文档\')/Files'
             sps_headers = {'accept': 'application/json'}
+            sps_username = 'corp\\{0}'.format(username.split('@')[0])
             response = requests.get(sps_site_url, auth=HttpNtlmAuth(
-                username, password), headers=sps_headers)
+                sps_username, password), headers=sps_headers)
             json_data = json.loads(response.content)
 
             context['username'] = username

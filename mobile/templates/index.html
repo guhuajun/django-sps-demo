@@ -5,7 +5,9 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">公司新闻</h4>
-                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel alias numquam repudiandae! Dolorem illo natus aliquid provident non voluptatem recusandae amet tempore. Nostrum harum incidunt rem optio omnis totam nihil?</p>
+                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel alias numquam
+                    repudiandae! Dolorem illo natus aliquid provident non voluptatem recusandae amet tempore. Nostrum
+                    harum incidunt rem optio omnis totam nihil?</p>
             </div>
         </div>
     </div>
@@ -14,11 +16,16 @@
             <div class="card-body">
                 <h4 class="card-title">邮件</h4>
             </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Item 1</li>
-                <li class="list-group-item">Item 2</li>
-                <li class="list-group-item">Item 3</li>
-            </ul>
+            <div class="list-group">
+                {% for message in messages %}
+                <a class="list-group-item">
+                    <div>
+                        <p>Sender: {{ message.sender }}</p>
+                    </div>
+                    <p>Subject: {{ message.subject }}</p>
+                </a>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>

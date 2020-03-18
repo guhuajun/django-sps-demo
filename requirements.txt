@@ -4,6 +4,7 @@ django-extensions
 requests
 requests-ntlm
 simplejson
+exchangelib
 
 pylint
 pylint-django
