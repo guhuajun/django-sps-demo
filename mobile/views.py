@@ -11,14 +11,16 @@ from exchangelib import Account, Credentials, Configuration
 from exchangelib.protocol import BaseProtocol, NoVerifyHTTPAdapter
 from requests_ntlm import HttpNtlmAuth
 
-from mobile.forms import CredentialForm
+from mobile.forms import CredentialForm, SearchForm
 
 logger = logging.getLogger(__name__)
 
 
-class IndexView(TemplateView):
+class IndexView(FormView):
 
     template_name = 'index.html'
+    form_class = SearchForm
+    success_url = '/'    
     cache = caches['default']
 
     def dispatch(self, request, *args, **kwargs):
@@ -29,6 +31,8 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        context['links'] = self.cache.get('links')
 
         # get username from cache
         username = self.request.session['username']
@@ -61,6 +65,26 @@ class IndexView(TemplateView):
             logger.error(str(ex))
 
         return context
+
+
+    def form_valid(self, form):
+        # get username from cache
+        username = self.request.session['username']
+        password = self.cache.get(username)
+
+        # retrieve data from sharepoint
+        sps_site_url = settings.SPS_ROOT + \
+            'sites/it/_api/search/query?querytext=\'{0}\''.format(form.data['keyword'])
+        sps_headers = {'accept': 'application/json;odata=nometadata'}
+        sps_username = 'corp\\{0}'.format(username.split('@')[0])
+        response = requests.get(sps_site_url, auth=HttpNtlmAuth(
+            sps_username, password), headers=sps_headers)
+        json_data = json.loads(response.content)
+        search_result = json_data['PrimaryQueryResult']['RelevantResults']['Table']['Rows']
+        links = [y['Value'] for x in search_result for y in x['Cells'] if y['Key'] == 'Path']
+        self.cache.set('links', links)
+
+        return super().form_valid(form)
 
 
 class LoginView(FormView):

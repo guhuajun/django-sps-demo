@@ -13,3 +13,10 @@ class CredentialForm(forms.Form):
     def set_cache(self):
         cache = caches['default']
         cache.set(self.data['username'], self.data['password'], 360)
+
+
+class SearchForm(forms.Form):
+
+    keyword = forms.CharField(
+        label='关键词', widget=forms.TextInput(attrs={'class': 'form-control'}))
+
